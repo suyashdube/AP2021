@@ -1,0 +1,131 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class a4part2 {
+
+ static ArrayList<images> imagesMatrix = new ArrayList<images>();
+ static Scanner sc = new Scanner(System.in);
+ public static void main(String[]arr) {
+        while (true) {
+            System.out.println("press 1 to stop entering and any other number to keep entering");
+            int c = sc.nextInt();
+            if (c == 1) {
+                break;
+            } else {
+                images im = new images();
+                imagesMatrix.add(im);
+            }
+        }
+        System.out.println("Entered images: ");
+        for (int i = 0; i < imagesMatrix.size(); i++) {
+            images.displayMatrix(imagesMatrix.get(i));
+        }
+        while (true) {
+            System.out.println("Enter any number to compute negative else enter 0 to exit");
+            int a = sc.nextInt();
+            if (a == 0) {
+                break;
+            } else {
+                System.out.println("Which matrix do you want to make negative? enter id");
+                int id = sc.nextInt();
+                for (int i = 0; i < imagesMatrix.size(); i++) {
+                    if (imagesMatrix.get(i).hashCode() == id) {
+                        images.makeNegative(imagesMatrix.get(i));
+                        images.displayMatrix(imagesMatrix.get(i));
+                    }
+                    //images.displayMatrix(imagesMatrix.get(i));
+                }
+
+            }
+        }
+    }
+}
+
+class images{
+    private  int[][] matrix;
+    private  int[][] matrixRed;
+    private  int[][] matrixBlue;
+    private  int[][] matrixGreen;
+    int choice;
+    public static void makeNegative(images im){
+
+        if(im.choice == 1){
+            for (int i = 0; i < im.rows; i++) {
+                for (int j = 0; j < im.col; j++) {
+                     im.matrixRed[i][j] -= 255;
+                     im.matrixBlue[i][j] -= 255;
+                     im.matrixGreen[i][j] -= 255;
+                }
+            }
+        }
+        else if(im.choice == 0){
+            for (int i = 0; i < im.rows; i++) {
+                for (int j = 0; j < im.col; j++) {
+                    im.matrix[i][j] -= 255;
+                }
+            }
+        }
+    }
+    public static void displayMatrix(images im){
+        if(im.choice == 1){
+            for (int i = 0; i < im.rows; i++) {
+                for (int j = 0; j < im.col; j++) {
+                    System.out.print(im.matrixRed[i][j] + " ");
+                    System.out.print(im.matrixBlue[i][j]+ " ");
+                    System.out.print(im.matrixGreen[i][j]+ " ");
+                }
+                System.out.println();
+
+            }
+            System.out.println("unique id of this colored matrix:" + im.hashCode());
+
+        }
+        else if(im.choice == 0){
+            for (int i = 0; i < im.rows; i++) {
+                for (int j = 0; j < im.col; j++) {
+                    System.out.print(im.matrix[i][j] + " ");
+                }
+                System.out.println();
+            }
+            System.out.println("unique id of this grey matrix:" + im.hashCode());
+        }
+    }
+    int rows,col;
+    public images(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("how many rows ");
+         rows = sc.nextInt();
+        System.out.println("How many cols: ");
+         col = sc.nextInt();
+        //inputMatrix();
+        System.out.println("Colored or grey? enter 1 for colored and 0 for grey:");
+        choice = sc.nextInt();
+        if(choice == 0) {
+            System.out.println("Input the matrix: ");
+            matrix = new int[rows][col];
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < col; j++) {
+                    matrix[i][j] = sc.nextInt();
+                }
+            }
+        }
+        else if(choice == 1){
+            System.out.println("Input the matrix: ");
+            matrixRed = new int[rows][col];
+            matrixBlue= new int[rows][col];
+            matrixGreen = new int[rows][col];
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < col; j++) {
+                    System.out.println("Enter value of red at row " + i +" and column" + j);
+                    matrixRed[i][j] = sc.nextInt();
+                    System.out.println("Enter value of blue at row " + i +" and column" + j);
+                    matrixBlue[i][j] = sc.nextInt();
+                    System.out.println("Enter value of green at row " + i +" and column" + j);
+                    matrixGreen[i][j] = sc.nextInt();
+                }
+            }
+        }
+
+    }
+
+}
