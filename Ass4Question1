@@ -1,0 +1,83 @@
+import java.util.*;
+
+public class a4 {
+
+
+    static int k;
+    public static void getInput(){
+        Scanner sc = new Scanner(System.in);
+        int n, isbn, barcode;
+        String title;
+        System.out.println("Enter number of books N and racks K respectively");
+        n = sc.nextInt();
+        k = sc.nextInt();
+        sc.nextLine();
+        //System.out.println();
+        while(n != 0){
+            System.out.println("Enter the title of the book: ");
+            //System.out.println();
+            title = sc.nextLine();
+            //System.out.println();
+            System.out.println("Enter the ISBN code:");
+            isbn = sc.nextInt();
+            System.out.println("Enter the barcode:");
+            barcode = sc.nextInt();
+            book b1 = new book(title,barcode,isbn);
+            book.books.add(b1);
+            sc.nextLine();
+            n--;
+        }
+        Collections.sort(book.books);
+
+    }
+    public static void displayFinalSort(){
+        for(int i = 0; i < book.books.size(); i++){
+            System.out.print(book.books.get(i).getTitle());
+            System.out.print(" ISBN: " + book.books.get(i).getIsbn());
+            System.out.print(" Barcode: "+book.books.get(i).getBarcode());
+            System.out.println();
+        }
+    }
+    public static void main(String[]args){
+        a4 obj = new a4();
+        getInput();
+        displayFinalSort();
+        System.out.println("Sorted order books on racks: ");
+        for(int i=0; i < k; i++){
+            System.out.println("SLOT " + i + " " + book.books.get(i).getTitle()
+             + " " + book.books.get(i).getIsbn() + " " +book.books.get(i).getBarcode());
+        }
+    }
+}
+
+class book implements Comparable<book>{
+    private String title;
+    private int barcode;
+    private int isbn;
+    static ArrayList<book> books = new ArrayList<book>();
+    public book(String title, int barcode, int isbn){
+        this.title = title;
+        this.barcode = barcode;
+        this.isbn = isbn;
+    }
+    public String getTitle(){
+        return this.title;
+    }
+    public int getIsbn(){
+        return this.isbn;
+    }
+    public int getBarcode(){
+        return this.barcode;
+    }
+
+    @Override
+    public int compareTo(book o) {
+        return Comparator.comparing(book::getTitle)
+                .thenComparing(book::getIsbn)
+                .thenComparing(book::getBarcode)
+                .compare(this,o);
+
+    }
+
+
+}
